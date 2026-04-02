@@ -80,33 +80,40 @@
     
   </div>
 
-  <script>
+ <script>
+  // Use the v3 callback style because your file is d3.v3.min.js
   d3.csv("datadefinitions.csv", function(error, quotes) {
+    
+    if (error) {
+        console.log("Error loading CSV:", error);
+        return;
+    }
 
-    // Grab random line from CSV
-    randomQuote = randomDraw(quotes);
+    // Grab random line using Underscore
+    var randomQuote = _.sample(quotes, 1);
 
-    var svg = d3.select("#quote_text");
+    var svg = d3.select("#quote_text");
 
-    var texts = svg.selectAll("text")
-      .data(randomQuote)
-      .enter();
+    // Clear previous
+    svg.selectAll("*").remove();
 
-    texts.append("text")
-      .attr("class", "quote_text")
-      .text(function(d) { return d.definition; })
+    var texts = svg.selectAll("text")
+      .data(randomQuote)
+      .enter();
 
-    texts.append("text")
-      .attr("class", "quote_source")
-      .text(function(d) { return " " + d.citation; })
-    
-  });
+    texts.append("text")
+      .attr("class", "quote_text")
+      .attr("x", 20) // Give it some padding
+      .attr("y", 40)
+      .text(function(d) { return d.definition; });
 
-  function randomDraw(random) {
-    sampled = _.sample(random,1);
-    return sampled;
-  }
-  </script>
+    texts.append("text")
+      .attr("class", "quote_source")
+      .attr("x", 20)
+      .attr("y", 70)
+      .text(function(d) { return " - " + d.citation; });
+  });
+</script>
   
 </body>
 </html>
