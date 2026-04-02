@@ -80,22 +80,13 @@
     
   </div>
 
- <script>
-  // Use the v3 callback style because your file is d3.v3.min.js
-  d3.csv("datadefinitions.csv", function(error, quotes) {
-    
-    if (error) {
-        console.log("Error loading CSV:", error);
-        return;
-    }
+  <script>
+  d3.csv("data.csv", function(error, quotes) {
 
-    // Grab random line using Underscore
-    var randomQuote = _.sample(quotes, 1);
+    // Grab random line from CSV
+    randomQuote = randomDraw(quotes);
 
     var svg = d3.select("#quote_text");
-
-    // Clear previous
-    svg.selectAll("*").remove();
 
     var texts = svg.selectAll("text")
       .data(randomQuote)
@@ -103,17 +94,20 @@
 
     texts.append("text")
       .attr("class", "quote_text")
-      .attr("x", 20) // Give it some padding
-      .attr("y", 40)
-      .text(function(d) { return d.definition; });
+      .text(function(d) { return d.definition; })
 
     texts.append("text")
       .attr("class", "quote_source")
-      .attr("x", 20)
-      .attr("y", 70)
-      .text(function(d) { return " - " + d.citation; });
+      .text(function(d) { return " " + d.citation; })
+    
   });
-</script>
+
+  function randomDraw(random) {
+    sampled = _.sample(random,1);
+    return sampled;
+  }
+  </script>
+
   
 </body>
 </html>
