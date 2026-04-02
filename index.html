@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="description" content="How people define data." />
+  <meta name="author" content="Ashish Kumar" />
+  <meta name="keywords" content="data" />
+  <meta name="source code" content="Copyright (c) 2026 Ashish Kumar" />
+  <title>What is Data?</title>
+
+  <script src="/lib/underscore-min.js"></script>
+  <script src="/lib/d3.v3.min.js"></script>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/foundation/5.1.1/css/normalize.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/foundation/5.1.1/css/foundation.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet">
+
+  <style type="text/css">
+  body {
+    color: #434343;
+    background: #fff;
+    line-height: 16px;
+    margin: 40px;
+    font-family: "Open Sans", sans-serif;
+  }
+
+  h1 {
+   font-family: "Fira Sans", sans-serif;
+  }
+  .title {
+    background: black;
+    color: white;
+    padding: 3px;
+  }
+    
+  #content {
+    width: 800px;
+    padding-top: 20px;
+  }
+
+  #notes {
+    font-size: 13px;
+    line-height: 17px;
+    color: #666;
+    padding-top: 15px;
+  }
+
+  text.quote_text {
+    font-size: 25px;
+    line-height: 28px;
+  }
+
+  text.quote_source {
+    font-size: 15px;
+    line-height: 52px;
+    font-variant: small-caps;
+    float: right;
+  }
+</style>
+
+</head>
+<body>
+
+  <h1>What is Data?</h1>
+
+  <div id="content">
+    <div class="row">
+      <span id="quote_text"></span>
+      <span id="quote_source"></span>
+    </div>
+
+    <hr>
+
+    <p id="notes"><strong>NB</strong>: Refresh the page to get a new definition. Definitions are sourced from legal resources from around the world.</p>
+
+    <p>By <a href="https://www.ashrike.tech/">Ashish Kumar</a> 
+    
+  </div>
+
+  <script>
+  d3.csv("datadefinitions.csv", function(error, quotes) {
+
+    // Grab random line from CSV
+    randomQuote = randomDraw(quotes);
+
+    var svg = d3.select("#quote_text");
+
+    var texts = svg.selectAll("text")
+      .data(randomQuote)
+      .enter();
+
+    texts.append("text")
+      .attr("class", "quote_text")
+      .text(function(d) { return d.definition; })
+
+    texts.append("text")
+      .attr("class", "quote_source")
+      .text(function(d) { return " " + d.citation; })
+    
+  });
+
+  function randomDraw(random) {
+    sampled = _.sample(random,1);
+    return sampled;
+  }
+  </script>
+
+</body>
+</html>
