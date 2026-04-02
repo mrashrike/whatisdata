@@ -83,30 +83,30 @@
   <script>
   d3.csv("datadefinitions.csv", function(error, quotes) {
 
-    // Grab random line from CSV
-    randomQuote = randomDraw(quotes);
+    // Grab random line from CSV
+    randomQuote = randomDraw(quotes);
 
-    var svg = d3.select("#quote_text");
+    var svg = d3.select("#quote_text");
 
-    var texts = svg.selectAll("text")
-      .data(randomQuote)
-      .enter();
+    var texts = svg.selectAll("text")
+      .data(randomQuote)
+      .enter();
 
-    texts.append("text")
-      .attr("class", "quote_text")
-      .text(function(d) { return d.definition; })
+    texts.append("text")
+      .attr("class", "quote_text")
+      .text(function(d) { return d.definition; })
 
-    texts.append("text")
-      .attr("class", "quote_source")
-      .text(function(d) { return " " + d.citation; })
-    
-  });
+    texts.append("text")
+      .attr("class", "quote_source")
+      .text(function(d) { return " " + d.citation; })
+    
+  });
 
-  function randomDraw(random) {
-    sampled = _.sample(random,1);
-    return sampled;
-  }
-  </script>
-
+  function randomDraw(random) {
+    sampled = _.sample(random,1);
+    return sampled;
+  }
+  </script>
+  
 </body>
 </html>
