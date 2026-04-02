@@ -81,7 +81,13 @@
   </div>
 
   <script>
-  d3.csv("./data.csv", function(error, quotes) {
+  d3.csv("./data.csv", function(error, quotes) 
+  
+  {
+    if (error) {
+        console.error("Error loading the CSV file:", error);
+        return; // Stop the script if the file didn't load
+    }
 
     // Grab random line from CSV
     randomQuote = randomDraw(quotes);
